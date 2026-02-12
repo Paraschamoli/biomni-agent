@@ -1,0 +1,163 @@
+# BioOmni - General-Purpose Biomedical AI Agent Skill
+# Advanced biomedical analysis with CRISPR, scRNA-seq, ChEMBL, and reporting
+
+# Basic Metadata
+id: biomni-v1
+name: biomni
+version: 1.0.0
+author: paras25619@gmail.com
+
+# Description
+description: |
+  A comprehensive biomedical AI agent that integrates advanced LLM reasoning with specialized 
+  domain tools for CRISPR screen design, single-cell RNA-seq analysis, ChEMBL database queries,
+  and scientific report generation. Designed for researchers, scientists, and bioinformaticians.
+
+# Tags and Modes
+tags:
+  - biomedical
+  - crispr
+  - scrna-seq
+  - chembl
+  - drug-discovery
+  - genomics
+  - bioinformatics
+  - scientific-reporting
+
+input_modes:
+  - text/plain
+  - application/json
+
+output_modes:
+  - text/plain
+  - application/json
+  - text/markdown
+  - application/pdf
+
+# Example Queries
+examples:
+  - "Design a CRISPR knockout screen for identifying essential genes in human cancer cell lines"
+  - "Analyze this single-cell RNA-seq dataset to identify cell types and marker genes"
+  - "Query ChEMBL for bioactivity data on this SMILES: CC(C)NCC(COC1=CC=CC=C1)O"
+  - "Generate a PDF report on CRISPR-Cas9 applications in immunotherapy"
+  - "Run BLAST on this DNA sequence: AGCTAGCTAGCTAGCTAGCT"
+
+# Detailed Capabilities
+capabilities_detail:
+  crispr_design:
+    supported: true
+    features:
+      - sgRNA_design_guidelines
+      - experimental_planning
+      - validation_strategy_design
+    limitations:
+      - "Does not perform computational off-target prediction"
+      - "References external tools (CRISPOR, Benchling) for actual prediction"
+
+  scrna_seq_analysis:
+    supported: true
+    features:
+      - cell_type_annotation
+      - differential_expression_analysis
+      - marker_gene_identification
+      - clustering_analysis
+    data_formats:
+      - .h5ad
+      - .loom
+      - 10x_mtx
+    limitations:
+      - "Requires pre-processed data"
+      - "Not for real-time sequencing analysis"
+
+  chembl_query:
+    supported: true
+    features:
+      - molecule_lookup_by_smiles
+      - bioactivity_data_retrieval
+      - target_information
+    limitations:
+      - "DATABASE QUERY ONLY - not computational prediction"
+      - "Requires internet connection"
+
+  pdf_reporting:
+    supported: true
+    formats:
+      - pdf_documents
+      - base64_encoded
+    features:
+      - automatic_text_wrapping
+      - metadata_inclusion
+      - page_management
+
+# Requirements
+requirements:
+  packages:
+    - agno>=2.2.0
+    - bindu>=2026.6.6
+    - openai>=2.11.0
+    - python-dotenv>=1.0.0
+    - biopython>=1.86
+    - scanpy>=1.12
+    - pandas>=2.0.0
+    - numpy>=1.24.0
+    - reportlab>=4.4.9
+    - chembl-webresource-client>=0.10.9
+  system: []
+  min_memory_mb: 1024
+  external_services:
+    - OpenRouter API
+    - NCBI BLAST (via internet)
+    - ChEMBL Database (via internet)
+
+# Performance Metrics
+performance:
+  avg_processing_time_ms: 5000
+  max_concurrent_requests: 10
+  memory_per_request_mb: 1024
+  timeout_seconds: 180
+  scalability: horizontal
+
+# Tool Restrictions
+allowed_tools:
+  - run_blast_sequence_async
+  - analyze_scrnaseq_async
+  - query_chembl_database_async
+  - generate_pdf_report_async
+  - design_crispr_sgrna_async
+
+# Error Handling
+error_handling:
+  - "Invalid sequence: Returns validation error with correction suggestions"
+  - "Missing API keys: Clear error with setup instructions"
+  - "File not found: Checks common paths and extensions"
+  - "Timeout: Suggests simpler queries or shorter sequences"
+
+# Assessment
+assessment:
+  keywords:
+    - crispr
+    - blast
+    - scrna-seq
+    - single-cell
+    - chembl
+    - drug
+    - gene
+    - sequence
+    - pdf
+    - report
+    - biomedical
+    - bioinformatics
+
+  anti_patterns:
+    - "clinical diagnosis"
+    - "patient treatment"
+    - "medical advice"
+    - "regulatory decision"
+
+  specializations:
+    - domain: gene_editing
+      confidence_boost: 0.4
+    - domain: single_cell_analysis
+      confidence_boost: 0.4
+    - domain: drug_discovery
+      confidence_boost: 0.3

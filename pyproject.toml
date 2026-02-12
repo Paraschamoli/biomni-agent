@@ -1,0 +1,183 @@
+[project]
+name = "biomni-agent"
+version = "0.0.1"
+description = "General-purpose biomedical AI agent integrating LLM reasoning, retrieval-augmented planning, and code-based execution; many domain-specific tools"
+authors = [{ name = "Paras Chamoli", email = "paras25619@gmail.com" }]
+readme = "README.md"
+keywords = ['python']
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "agno>=2.2.0",
+    "bindu==2026.6.6",
+    "sqlalchemy==2.0.44",
+    "requests>=2.31.0",
+    "pyperclip>=1.8.0",
+    "rich>=13.0.0",
+    "openai>=2.11.0",
+    "mem0ai>=1.0.1",
+    "ddgs>=9.9.3",
+    
+    # Core biomedical dependencies
+    "biopython>=1.86",
+    "scanpy>=1.12",
+    "reportlab>=4.4.9",
+    "pypdf>=6.7.0",
+    "chembl-webresource-client>=0.10.9",
+    
+    # Additional dependencies for biomedical tools
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "scikit-learn>=1.3.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "scipy>=1.10.0",
+    "statsmodels>=0.14.0",
+    
+    # File format support
+    "anndata>=0.10.0",
+    "h5py>=3.8.0",
+    
+    # Data manipulation
+    "polars>=0.19.0",
+    "pyarrow>=14.0.0",
+    
+    # Chemistry/biology
+    "rdkit>=2023.9.5 ; platform_system != 'Windows'",
+    "pubchempy>=1.0.4",
+    
+    # Utilities
+    "python-dotenv>=1.0.0",
+    "tenacity>=8.2.0",
+    "tqdm>=4.65.0",
+    "typing-extensions>=4.8.0",
+]
+
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://Paraschamoli.github.io/biomni-agent/"
+Repository = "https://github.com/Paraschamoli/biomni-agent"
+Documentation = "https://Paraschamoli.github.io/biomni-agent/"
+"Bug Tracker" = "https://github.com/Paraschamoli/biomni-agent/issues"
+"Changelog" = "https://github.com/Paraschamoli/biomni-agent/releases"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.2.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.3.0",
+    "pytest-mock>=3.11.0",
+]
+docs = [
+    "mkdocs>=1.4.2",
+    "mkdocs-material>=8.5.10",
+    "mkdocstrings[python]>=0.26.1",
+]
+dev = [
+    "pre-commit>=2.20.0",
+    "ruff>=0.11.5",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+    "tox-uv>=1.11.3",
+    "ty>=0.0.1a16",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.2.0",
+    "pytest-asyncio>=0.23.0",
+    "pre-commit>=2.20.0",
+    "tox-uv>=1.11.3",
+    "ty>=0.0.1a16",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.11.5",
+    "mkdocs>=1.4.2",
+    "mkdocs-material>=8.5.10",
+    "mkdocstrings[python]>=0.26.1",
+    "types-requests>=2.31.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["biomni_agent"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "biomni_agent/**/*.py",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+    "agent_config.json",
+]
+
+[tool.ty.environment]
+python = "./.venv"
+python-version = "3.12"
+
+# No [tool.ty.rules] section - we rely on inline type ignores
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+source = ["biomni_agent"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+fix = true
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "SIM", # flake8-simplify
+    "T10", # flake8-debugger
+    "RUF", # ruff-specific
+    "UP",  # pyupgrade
+    "S",   # flake8-bandit
+]
+ignore = [
+    "E501", # Line too long
+    "E731", # Do not assign a lambda expression
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.ruff.format]
+preview = true
+
+[project.scripts]
+biomni-agent = "biomni_agent.main:main"
