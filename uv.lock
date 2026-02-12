@@ -391,6 +391,8 @@ dev = [
     { name = "ruff" },
     { name = "tox-uv" },
     { name = "ty" },
+    { name = "types-pyperclip" },
+    { name = "types-reportlab" },
     { name = "types-requests" },
 ]
 
@@ -457,6 +459,8 @@ dev = [
     { name = "ruff", specifier = ">=0.11.5" },
     { name = "tox-uv", specifier = ">=1.11.3" },
     { name = "ty", specifier = ">=0.0.1a16" },
+    { name = "types-pyperclip", specifier = ">=1.9.0.20250801" },
+    { name = "types-reportlab", specifier = ">=4.4.9.20260117" },
     { name = "types-requests", specifier = ">=2.31.0" },
 ]
 
@@ -3635,6 +3639,24 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/36/bf/8825b5929afd84d0dabd606c67cd57b8388cb3ec385f7ef19c5cc2202069/typer-0.21.1.tar.gz", hash = "sha256:ea835607cd752343b6b2b7ce676893e5a0324082268b48f27aa058bdb7d2145d", size = 110371, upload-time = "2026-01-06T11:21:10.989Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a0/1d/d9257dd49ff2ca23ea5f132edf1281a0c4f9de8a762b9ae399b670a59235/typer-0.21.1-py3-none-any.whl", hash = "sha256:7985e89081c636b88d172c2ee0cfe33c253160994d47bdfdc302defd7d1f1d01", size = 47381, upload-time = "2026-01-06T11:21:09.824Z" },
+]
+
+[[package]]
+name = "types-pyperclip"
+version = "1.9.0.20250801"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/5b/7d/144cc18484621f31b1c04f2b4e6b1cd925a25573f72f00770f0030061cd4/types_pyperclip-1.9.0.20250801.tar.gz", hash = "sha256:37eb1b8f6989ccc1ec2f80e2984316f74ccd2aedb385331c210252928ffc3a1f", size = 7202, upload-time = "2025-08-01T03:47:43.071Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/38/6e/af02c7af8178f2d3933b26560b5428236fcfa78966dbb4a52220f1b2253b/types_pyperclip-1.9.0.20250801-py3-none-any.whl", hash = "sha256:73ad08721a2380506549027d5b13a8b360db909a2480649e728a37d836c36456", size = 7606, upload-time = "2025-08-01T03:47:42.115Z" },
+]
+
+[[package]]
+name = "types-reportlab"
+version = "4.4.9.20260117"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/98/9b/de5d44670cce754e593cffd8ef8044ce58d032415fffaa50e5ccdf3dd496/types_reportlab-4.4.9.20260117.tar.gz", hash = "sha256:a274f3e7a6d54193bb4d0945a69656de46db212bfe1dd977d7d30b39bfac9de9", size = 69031, upload-time = "2026-01-17T03:14:32.876Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a7/38/7c4dcb40362313026bf5b39d4de14a8abc5c7b446260c039b603999428b0/types_reportlab-4.4.9.20260117-py3-none-any.whl", hash = "sha256:ef6584a2cb8e2538dd7047741b30e8439ba12c6e4672f243014e6b7a415febc2", size = 109748, upload-time = "2026-01-17T03:14:31.54Z" },
 ]
 
 [[package]]
