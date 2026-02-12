@@ -53,7 +53,7 @@ check: ## Run code quality tools
 	@echo "🚀 Linting code: Running pre-commit"
 	@uv run pre-commit run -a
 	@echo "🚀 Static type checking: Running ty"
-	@ty check biomni_agent
+	@    @uv run ty check biomni_agent
 .PHONY: test
 test: ## Test the code with pytest
 	@echo "🚀 Testing code: Running pytest"

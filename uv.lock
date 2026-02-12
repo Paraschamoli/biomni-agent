@@ -442,6 +442,7 @@ requires-dist = [
     { name = "tox-uv", marker = "extra == 'dev'", specifier = ">=1.11.3" },
     { name = "tqdm", specifier = ">=4.65.0" },
     { name = "ty", marker = "extra == 'dev'", specifier = ">=0.0.1a16" },
+    { name = "ty", marker = "extra == 'dev'", specifier = ">=0.0.15" },
     { name = "typing-extensions", specifier = ">=4.8.0" },
 ]
 provides-extras = ["test", "docs", "dev"]
@@ -458,7 +459,7 @@ dev = [
     { name = "pytest-cov", specifier = ">=4.0.0" },
     { name = "ruff", specifier = ">=0.11.5" },
     { name = "tox-uv", specifier = ">=1.11.3" },
-    { name = "ty", specifier = ">=0.0.1a16" },
+    { name = "ty", specifier = ">=0.0.15" },
     { name = "types-pyperclip", specifier = ">=1.9.0.20250801" },
     { name = "types-reportlab", specifier = ">=4.4.9.20260117" },
     { name = "types-requests", specifier = ">=2.31.0" },
