@@ -1,4 +1,4 @@
-﻿# |---------------------------------------------------------|
+# |---------------------------------------------------------|
 # |                                                         |
 # |                 Give Feedback / Get Help                |
 # | https://github.com/getbindu/Bindu/issues/new/choose    |
@@ -9,9 +9,9 @@
 
 """BioOmni - A General-Purpose Biomedical AI Agent.
 
-General-purpose biomedical AI agent integrating LLM reasoning, 
-retrieval-augmented planning, and code-based execution with 
-domain-specific tools for CRISPR screens, scRNA-seq annotation, 
+General-purpose biomedical AI agent integrating LLM reasoning,
+retrieval-augmented planning, and code-based execution with
+domain-specific tools for CRISPR screens, scRNA-seq annotation,
 ADMET prediction, and PDF report generation.
 """
 
@@ -23,7 +23,7 @@ import sys
 import traceback
 from pathlib import Path
 from textwrap import dedent
-from typing import Any, Optional
+from typing import Any
 
 from agno.agent import Agent
 from agno.models.openrouter import OpenRouter
@@ -33,12 +33,11 @@ from dotenv import load_dotenv
 
 # Import our lightweight biomedical tools
 from biomni_agent.biomedical_tools import (
-    run_blast_sequence_async,
     analyze_scrnaseq_async,
-    predict_admet_properties_async,
     generate_pdf_report_async,
+    predict_admet_properties_async,
+    run_blast_sequence_async,
 )
-
 
 # Load environment variables from .env file
 load_dotenv()
@@ -56,17 +55,19 @@ def load_config() -> dict:
     """Load agent configuration from project root."""
     # Get path to agent_config.json in project root
     config_path = Path(__file__).parent / "agent_config.json"
-    
+
     if not config_path.exists():
         raise FileNotFoundError(f"Config file not found: {config_path}")
-    
+
     try:
-        with open(config_path, "r", encoding="utf-8") as f:
+        with open(config_path, encoding="utf-8") as f:
             return json.load(f)
     except json.JSONDecodeError as e:
-        raise ValueError(f"Invalid JSON in config file: {e}")
+        # Use 'from e' to preserve exception chain (fixes B904)
+        raise ValueError(f"Invalid JSON in config file: {e}") from e
     except Exception as e:
-        raise RuntimeError(f"Error loading config: {e}")
+        # Use 'from e' to preserve exception chain (fixes B904)
+        raise RuntimeError(f"Error loading config: {e}") from e
 
 
 def get_model_name() -> str:
@@ -74,7 +75,7 @@ def get_model_name() -> str:
     return os.getenv("MODEL_NAME", "openai/gpt-4o")
 
 
-def get_api_keys() -> tuple[Optional[str], Optional[str]]:
+def get_api_keys() -> tuple[str | None, str | None]:
     """Get API keys from environment."""
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
     mem0_key = os.getenv("MEM0_API_KEY")
@@ -84,14 +85,14 @@ def get_api_keys() -> tuple[Optional[str], Optional[str]]:
 def validate_environment() -> None:
     """Validate required environment variables."""
     openrouter_key, mem0_key = get_api_keys()
-    
+
     if not openrouter_key:
         raise ValueError(
             "OPENROUTER_API_KEY environment variable is required.\n"
             "Set it in .env file or use --api-key argument.\n"
             "Get API key from: https://openrouter.ai/keys"
         )
-    
+
     if not mem0_key:
         print("⚠️  MEM0_API_KEY not set - memory functions will be disabled")
 
@@ -115,7 +116,7 @@ async def initialize_agent() -> None:
         predict_admet_properties_async,
         generate_pdf_report_async,
     ]
-    
+
     # Add memory tool only if API key is provided
     if mem0_api_key:
         try:
@@ -136,46 +137,47 @@ async def initialize_agent() -> None:
             max_retries=2,
         ),
         tools=tools,
-        instructions=[dedent("""\
+        instructions=[
+            dedent("""\
             You are BioOmni, a general-purpose biomedical AI agent.
-            
+
             CORE CAPABILITIES:
             1. CRISPR Screen Planning & Design
                - Design CRISPR libraries for gene knockout/activation
                - Select optimal sgRNAs with minimal off-target effects
                - Plan control experiments and validation strategies
                - Generate screen analysis pipelines
-            
+
             2. Single-Cell RNA-seq Analysis
                - Annotate scRNA-seq data and identify cell types
                - Perform differential expression analysis
                - Identify marker genes and cellular states
                - Generate UMAP/t-SNE visualizations (descriptive)
-            
+
             3. Drug Discovery & ADMET Prediction
                - Predict absorption, distribution, metabolism, excretion, toxicity
                - Analyze compound properties from SMILES strings
                - Suggest lead optimization strategies
                - Identify potential safety concerns
-            
+
             4. Experimental Hypothesis Generation
                - Generate testable biological hypotheses
                - Design experimental workflows
                - Suggest controls and validation methods
                - Predict potential outcomes
-            
+
             5. Scientific Report Generation
                - Create comprehensive PDF reports
                - Structure findings with proper sections
                - Include methodologies and results
                - Add references and citations when possible
-            
+
             AVAILABLE TOOLS:
             - run_blast_sequence_async: Run BLAST sequence alignment (DNA/protein)
             - analyze_scrnaseq_async: Analyze single-cell RNA-seq data
             - predict_admet_properties_async: Predict ADMET properties from SMILES
             - generate_pdf_report_async: Generate PDF reports from analysis results
-            
+
             WORKFLOW GUIDELINES:
             1. Understand the biomedical query thoroughly
             2. Break down complex problems into executable steps
@@ -183,20 +185,21 @@ async def initialize_agent() -> None:
             4. Interpret results in biological context
             5. Generate actionable insights and next steps
             6. Create well-structured reports when requested
-            
+
             OUTPUT FORMATS:
             - For analysis: Structured results with interpretations
             - For plans: Step-by-step experimental designs
             - For predictions: Clear probabilities with confidence levels
             - For reports: Professional PDF format with all sections
-            
+
             SAFETY & ETHICS:
             - Always prioritize scientific accuracy
             - Flag uncertain predictions clearly
             - Consider ethical implications in biomedical research
             - Respect data privacy and confidentiality
             - Suggest validation experiments for critical findings
-        """)],
+        """)
+        ],
         add_datetime_to_context=True,
         markdown=True,
         # show_tool_calls=True,  # Enable tool call visibility
@@ -218,7 +221,7 @@ async def run_agent(messages: list[dict[str, str]]) -> Any:
 
     if not agent:
         raise RuntimeError("Agent not initialized. Call initialize_agent() first.")
-    
+
     try:
         # Run the agent and get response
         response = await agent.arun(messages)
@@ -243,7 +246,7 @@ async def handler(messages: list[dict[str, str]]) -> Any:
     # Validate input messages
     if not messages:
         raise ValueError("Empty messages list provided")
-    
+
     for msg in messages:
         if not isinstance(msg, dict) or "role" not in msg or "content" not in msg:
             raise ValueError("Each message must be a dict with 'role' and 'content' keys")
@@ -288,7 +291,7 @@ def main():
 Examples:
   %(prog)s --api-key sk-xxxx --model openai/gpt-4o
   %(prog)s --api-key sk-xxxx --mem0-api-key mem0-xxxx
-        """
+        """,
     )
     parser.add_argument(
         "--model",
@@ -313,7 +316,7 @@ Examples:
         type=str,
         help="Path to custom config file (optional)",
     )
-    
+
     args = parser.parse_args()
 
     # Set global model name and API keys
@@ -328,7 +331,7 @@ Examples:
         os.environ["MEM0_API_KEY"] = mem0_api_key
     os.environ["MODEL_NAME"] = model_name
 
-    print(f"🤖 BioOmni - Biomedical AI Agent")
+    print("🤖 BioOmni - Biomedical AI Agent")
     print(f"📊 Using model: {model_name}")
     print("🧬 Available tools: BLAST, scRNA-seq, ADMET, PDF Reports")
     if mem0_api_key:
@@ -342,20 +345,20 @@ Examples:
             config_path = Path(args.config)
             if not config_path.exists():
                 raise FileNotFoundError(f"Config file not found: {config_path}")
-            with open(config_path, "r", encoding="utf-8") as f:
+            with open(config_path, encoding="utf-8") as f:
                 config = json.load(f)
             print(f"📁 Using custom config: {args.config}")
         else:
             config = load_config()
-        
+
         print(f"🌐 Server will run on: {config.get('deployment', {}).get('url', 'http://127.0.0.1:3773')}")
 
         # Bindufy and start the agent server
         print("🚀 Starting BioOmni server...")
         print("📝 Press Ctrl+C to stop the server")
-        
+
         bindufy(config, handler)
-        
+
     except KeyboardInterrupt:
         print("\n🛑 BioOmni Agent stopped by user")
     except FileNotFoundError as e:
