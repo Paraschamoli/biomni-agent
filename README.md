@@ -6,15 +6,19 @@
 <h3 align="center">General-Purpose Biomedical AI Agent</h3>
 
 <p align="center">
-  <strong>Biomedical AI agent integrating LLM reasoning, retrieval-augmented planning, and code-based execution</strong><br/>
-  Advanced tools for CRISPR screens, scRNA-seq annotation, ADMET prediction, and PDF report generation
+  <strong>Biomedical AI agent integrating LLM reasoning with specialized domain tools</strong><br/>
+  CRISPR screen design, scRNA-seq analysis, ADMET prediction, and scientific PDF reports
 </p>
 
 <p align="center">
-  <a href="https://github.com/Paraschamoli/biomni-agent/actions/workflows/main.yml?query=branch%3Amain">
-    <img src="https://img.shields.io/github/actions/workflow/status/Paraschamoli/biomni-agent/main.yml?branch=main" alt="Build status">
+  <a href="https://github.com/Paraschamoli/biomni-agent/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/Paraschamoli/biomni-agent/main.yml?branch=main" alt="Build Status">
   </a>
-  <a href="https://img.shields.io/github/license/Paraschamoli/biomni-agent">
+  <a href="https://pypi.org/project/biomni-agent/">
+    <img src="https://img.shields.io/pypi/v/biomni-agent" alt="PyPI Version">
+  </a>
+  <img src="https://img.shields.io/badge/python-3.12+-blue.svg" alt="Python Version">
+  <a href="https://github.com/Paraschamoli/biomni-agent/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/Paraschamoli/biomni-agent" alt="License">
   </a>
 </p>
@@ -23,348 +27,465 @@
 
 ## 🎯 What is BioOmni Agent?
 
-A comprehensive biomedical AI agent that integrates advanced LLM reasoning with specialized domain tools. Built for researchers, scientists, and healthcare professionals who need sophisticated biomedical analysis capabilities.
+A comprehensive biomedical AI agent that integrates advanced LLM reasoning with specialized domain tools. Built for researchers, scientists, and bioinformaticians who need sophisticated biomedical analysis capabilities without writing code.
 
 ### Key Features
 *   **🧬 CRISPR Screen Planning & Design** - Design CRISPR libraries, select optimal sgRNAs, plan validation strategies
 *   **🔬 Single-Cell RNA-seq Analysis** - Annotate scRNA-seq data, identify cell types, perform differential expression
-*   **💊 Drug Discovery & ADMET Prediction** - Predict absorption, distribution, metabolism, excretion, and toxicity
-*   **📊 Scientific Report Generation** - Create comprehensive PDF reports with proper scientific structure
+*   **💊 Drug Discovery & ADMET Prediction** - Query ChEMBL database for bioactivity data from SMILES strings
+*   **🧬 BLAST Sequence Analysis** - Run NCBI BLAST searches for DNA, RNA, and protein sequences
+*   **📊 Scientific Report Generation** - Create comprehensive PDF reports with proper scientific formatting
 *   **🧠 Memory-Enhanced Learning** - Mem0 integration for context-aware biomedical conversations
 *   **⚡ Lazy Initialization** - Fast boot times, initializes on first request
+*   **🔐 Secure API Handling** - API keys from environment only, never hardcoded
+
+---
+
+## 🛠️ Tools & Capabilities
+
+### Built-in Biomedical Tools
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| **`run_blast_sequence_async`** | NCBI BLAST search | Sequence homology, gene identification |
+| **`analyze_scrnaseq_async`** | Single-cell RNA-seq analysis | Cell typing, clustering, marker genes |
+| **`predict_admet_properties_async`** | ChEMBL database query | Drug properties, bioactivity data |
+| **`generate_pdf_report_async`** | Scientific PDF generation | Research reports, documentation |
+
+### Research Capabilities
+1.  **CRISPR Screen Design** - Library design, sgRNA selection, validation strategies
+2.  **Transcriptomics Analysis** - Cell annotation, differential expression, visualization
+3.  **Cheminformatics** - Compound lookup, activity data, target information
+4.  **Experimental Planning** - Hypothesis generation, workflow design, controls
+
+---
+
+> **🌐 Join the Internet of Agents**
+> Register your agent at [bindus.directory](https://bindus.directory) to make it discoverable worldwide and enable agent-to-agent collaboration. It takes 2 minutes and unlocks the full potential of your agent.
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### 1. Prerequisites
 
-- Python 3.10+
+- Python 3.12+
 - [uv](https://github.com/astral-sh/uv) package manager
-- API keys for OpenRouter and Mem0 (both have free tiers)
+- API keys: [OpenRouter](https://openrouter.ai/keys) (required), [Mem0](https://app.mem0.ai/dashboard/api-keys) (optional)
 
-### Installation
+### 2. Clone and Setup
 
 ```bash
 # Clone the repository
 git clone https://github.com/Paraschamoli/biomni-agent.git
 cd biomni-agent
 
-# Create virtual environment
-uv venv --python 3.12.9
+# Set up virtual environment with uv
+uv venv --python 3.12
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Install dependencies
 uv sync
-
-# Configure environment
-cp .env.example .env
 ```
 
-### Configuration
-
-Edit `.env` and add your API keys:
-
-| Key | Get It From | Required |
-|-----|-------------|----------|
-| `OPENROUTER_API_KEY` | [OpenRouter](https://openrouter.ai/keys) | ✅ Yes |
-| `MEM0_API_KEY` | [Mem0 Dashboard](https://app.mem0.ai/dashboard/api-keys) | If you want to use Mem0 tools |
-
-### Run the Agent
+### 3. Configure Environment
 
 ```bash
-# Start the agent
+# Copy environment template
+cp .env.example .env
+
+# Edit .env and add your API keys:
+# OPENROUTER_API_KEY=sk-...  # Required for LLM
+# MEM0_API_KEY=m0-...         # Optional for memory features
+```
+
+### 4. Run Locally
+
+```bash
+# Start the BioOmni agent
 uv run python -m biomni_agent
 
-# Agent will be available at http://localhost:3773
+# Or directly
+uv run biomni-agent
+
+# Access at: http://localhost:3773
 ```
 
-### Github Setup
-
-```bash
-# Initialize git repository and commit your code
-git init -b main
-git add .
-git commit -m "Initial commit"
-
-# Create repository on GitHub and push (replace with your GitHub username)
-gh repo create Paraschamoli/biomni-agent --public --source=. --remote=origin --push
-```
-
----
-
-## 💡 Usage
-
-### Example Queries
-
-```bash
-# CRISPR screen design
-"Design a CRISPR knockout screen for identifying essential genes in human cancer cell lines"
-
-# scRNA-seq analysis
-"Analyze this single-cell RNA-seq dataset to identify cell types and marker genes"
-
-# ADMET prediction
-"Predict the ADMET properties for this SMILES string: CC(C)NCC(COC1=CC=CC=C1)O"
-
-# Experimental design
-"Design an experiment to validate the role of gene X in drug resistance"
-```
-
-### Input Formats
-
-**Plain Text:**
-```
-Design a CRISPR screen for identifying synthetic lethal interactions in BRCA1-deficient cells
-```
-
-**JSON:**
-```json
-{
-  "query": "Analyze scRNA-seq data",
-  "data_type": "single_cell",
-  "focus": "cell_type_annotation",
-  "parameters": {
-    "min_cells": 10,
-    "min_genes": 200
-  }
-}
-```
-
-### Output Structure
-
-The agent returns structured output with:
-- **Analysis Results**: Detailed biomedical analysis with interpretations
-- **Experimental Plans**: Step-by-step protocols and validation strategies
-- **Predictions**: ADMET properties with confidence scores and safety warnings
-- **Reports**: Professional PDF documents with methods, results, and references
-- **Visualizations**: Descriptive statistics and plotting recommendations
-
----
-
-## 🔌 API Usage
-
-The agent exposes a RESTful API when running. Default endpoint: `http://localhost:3773`
-
-### Quick Start
-
-For complete API documentation, request/response formats, and examples, visit:
-
-📚 **[Bindu API Reference - Send Message to Agent](https://docs.getbindu.com/api-reference/all-the-tasks/send-message-to-agent)**
-
-
-### Additional Resources
-
-- 📖 [Full API Documentation](https://docs.getbindu.com/api-reference/all-the-tasks/send-message-to-agent)
-- 📦 [Postman Collections](https://github.com/GetBindu/Bindu/tree/main/postman/collections)
-- 🔧 [API Reference](https://docs.getbindu.com)
-
----
-
-## 🎯 Skills
-
-### biomni_agent (v1.0.0)
-
-**Primary Capability:**
-- Comprehensive biomedical research and analysis
-- Integration of multiple omics data types
-- Experimental design and validation planning
-
-**Features:**
-- CRISPR screen design and optimization
-- Single-cell RNA-seq analysis and annotation
-- ADMET property prediction from chemical structures
-- PDF report generation with scientific formatting
-- Memory-enhanced contextual understanding
-
-**Best Used For:**
-- Designing gene editing experiments
-- Analyzing high-throughput sequencing data
-- Drug discovery and safety assessment
-- Generating scientific reports and publications
-- Planning validation experiments
-
-**Not Suitable For:**
-- Clinical diagnosis or patient-specific medical advice
-- Real-time emergency medical situations
-- Regulatory compliance decisions
-- Direct patient care decisions
-
-**Performance:**
-- Average processing time: ~3-8 seconds
-- Max concurrent requests: 10
-- Memory per request: 512MB
-
----
-
-## 🐳 Docker Deployment
-
-### Local Docker Setup
+### 5. Test with Docker
 
 ```bash
 # Build and run with Docker Compose
 docker-compose up --build
 
-# Agent will be available at http://localhost:3773
-```
-
-### Docker Configuration
-
-The agent runs on port `3773` and requires:
-- `OPENROUTER_API_KEY` environment variable
-- `MEM0_API_KEY` environment variable
-
-Configure these in your `.env` file before running.
-
-### Production Deployment
-
-```bash
-# Use production compose file
-docker-compose -f docker-compose.prod.yml up -d
+# Access at: http://localhost:3773
 ```
 
 ---
 
-## 🌐 Deploy to bindus.directory
+## 🔧 Configuration
 
-Make your agent discoverable worldwide and enable agent-to-agent collaboration.
+### Environment Variables
+Create a `.env` file:
 
-### Setup GitHub Secrets
+```env
+# Required
+OPENROUTER_API_KEY=sk-...     # OpenRouter API key (get from openrouter.ai)
 
-```bash
-# Authenticate with GitHub
-gh auth login
-
-# Set deployment secrets
-gh secret set BINDU_API_TOKEN --body "<your-bindu-api-key>"
-gh secret set DOCKERHUB_TOKEN --body "<your-dockerhub-token>"
+# Optional
+MEM0_API_KEY=m0-...           # Mem0 API key for memory features
+MODEL_NAME=openai/gpt-4o      # Model to use (default: openai/gpt-4o)
+DEBUG=true                    # Enable debug logging
 ```
 
-Get your keys:
-- **Bindu API Key**: [bindus.directory](https://bindus.directory) dashboard
-- **Docker Hub Token**: [Docker Hub Security Settings](https://hub.docker.com/settings/security)
-
-### Deploy
-
-```bash
-# Push to trigger automatic deployment
-git push origin main
-```
-
-GitHub Actions will automatically:
-1. Build your agent
-2. Create Docker container
-3. Push to Docker Hub
-4. Register on bindus.directory
+### Port Configuration
+Default port: `3773` (can be changed in `agent_config.json`)
 
 ---
 
-## 🛠️ Development
+## 💡 Usage Examples
 
-### Project Structure
+### Via HTTP API
+
+```bash
+curl -X POST http://localhost:3773/chat \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "role": "user",
+        "content": "Design a CRISPR knockout screen for identifying essential genes in human cancer cell lines. Include sgRNA selection criteria and validation strategies."
+      }
+    ]
+  }'
+```
+
+### Sample Research Queries
+
+```text
+# CRISPR screen design
+"Design a CRISPR-Cas9 screen to identify genes involved in drug resistance in melanoma"
+
+# scRNA-seq analysis
+"Analyze this single-cell RNA-seq dataset to identify cell types and marker genes: /path/to/data.h5ad"
+
+# ADMET prediction
+"Query ChEMBL for bioactivity data on this SMILES: CC(C)NCC(COC1=CC=CC=C1)O"
+
+# BLAST search
+"Run BLAST on this DNA sequence: AGCTAGCTAGCTAGCTAGCTAGCT"
+
+# PDF report generation
+"Generate a comprehensive PDF report on CRISPR-Cas9 applications in immunotherapy"
+```
+
+### Expected Output Format
+
+```json
+{
+  "success": true,
+  "n_cells": 12500,
+  "n_genes": 18000,
+  "n_clusters": 8,
+  "cluster_sizes": {
+    "0": 3200,
+    "1": 2800,
+    "2": 2100,
+    "3": 1500,
+    "4": 1200,
+    "5": 900,
+    "6": 500,
+    "7": 300
+  },
+  "summary": "Identified 8 distinct cell clusters including T cells, monocytes, and B cells."
+}
+```
+
+---
+
+## 🐳 Docker Deployment
+
+### Quick Docker Setup
+
+```bash
+# Build the image
+docker build -f Dockerfile.agent -t biomni-agent .
+
+# Run container
+docker run -d \
+  -p 3773:3773 \
+  -e OPENROUTER_API_KEY=your_key_here \
+  -e MEM0_API_KEY=your_mem0_key \
+  --name biomni-agent \
+  biomni-agent
+
+# Check logs
+docker logs -f biomni-agent
+```
+
+### Docker Compose (Recommended)
+
+**docker-compose.yml**
+```yaml
+version: '3.8'
+services:
+  biomni-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    ports:
+      - "3773:3773"
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - MEM0_API_KEY=${MEM0_API_KEY}
+      - MODEL_NAME=${MODEL_NAME:-openai/gpt-4o}
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+```
+
+**Run with Compose:**
+```bash
+# Start with compose
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop
+docker-compose down
+```
+
+---
+
+## 📁 Project Structure
 
 ```
 biomni-agent/
 ├── biomni_agent/
-│   ├── skills/
-│   │   └── biomni_agent/
-│   │       ├── skill.yaml          # Skill configuration
-│   │       └── __init__.py
-│   ├── __init__.py
-│   ├── __main__.py
-│   ├── main.py                     # Agent entry point
-│   └── agent_config.json           # Agent configuration
+│   ├── __init__.py              # Package initialization
+│   ├── __main__.py              # Entry point
+│   ├── __version__.py           # Version information
+│   ├── main.py                  # Agent implementation
+│   ├── biomedical_tools.py      # Biomedical tool functions
+│   ├── agent_config.json        # Bindu agent configuration
+│   └── skills/
+│       └── biomni/
+│           ├── skill.yaml       # Skill metadata
+│           └── __init__.py
 ├── tests/
-│   └── test_main.py
-├── .env.example
-├── docker-compose.yml
-├── Dockerfile.agent
-└── pyproject.toml
+│   ├── __init__.py
+│   └── test_main.py            # Unit tests
+├── pyproject.toml              # Python dependencies
+├── Dockerfile.agent            # Docker build configuration
+├── docker-compose.yml          # Docker Compose setup
+├── README.md                   # This documentation
+├── .env.example                # Environment template
+└── LICENSE                     # MIT License
 ```
 
-### Running Tests
+---
+
+## 🔌 API Reference
+
+### Health Check
 
 ```bash
-make test              # Run all tests
-make test-cov          # With coverage report
+GET http://localhost:3773/health
 ```
 
-### Code Quality
+**Response:**
+```json
+{"status": "healthy", "agent": "BioOmni Agent"}
+```
+
+### Chat Endpoint
 
 ```bash
-make format            # Format code with ruff
-make lint              # Run linters
-make check             # Format + lint + test
+POST http://localhost:3773/chat
+Content-Type: application/json
+
+{
+  "messages": [
+    {"role": "user", "content": "Your biomedical research query here"}
+  ]
+}
 ```
 
-### Pre-commit Hooks
+**Response:**
+```json
+{
+  "run_id": "abc-123",
+  "content": "## CRISPR Screen Design Results...",
+  "status": "COMPLETED"
+}
+```
+
+For complete API documentation, visit: [Bindu API Reference](https://docs.getbindu.com/api-reference/all-the-tasks/send-message-to-agent)
+
+---
+
+## 🧪 Testing
+
+### Local Testing
 
 ```bash
-# Install pre-commit hooks
-uv run pre-commit install
+# Install test dependencies
+uv sync --group test
 
-# Run manually
-uv run pre-commit run -a
+# Run all tests
+uv run pytest tests/
+
+# Run with coverage
+uv run pytest --cov=biomni_agent tests/
+
+# Run specific test
+uv run pytest tests/test_main.py -v
 ```
+
+### Integration Test
+
+```bash
+# Start agent in background
+uv run biomni-agent &
+
+# Test API endpoint
+curl -X POST http://localhost:3773/chat \
+  -H "Content-Type: application/json" \
+  -d '{"messages": [{"role": "user", "content": "Design a CRISPR screen for essential genes"}]}'
+
+# Kill agent
+kill %1
+```
+
+---
+
+## 🚨 Troubleshooting
+
+### Common Issues & Solutions
+
+| Issue | Solution |
+|-------|----------|
+| "OPENROUTER_API_KEY not set" | Create `.env` file with your API key or pass via `--api-key` |
+| "ModuleNotFoundError" | Run `uv sync --force` to reinstall dependencies |
+| "Port 3773 already in use" | Change port in `agent_config.json` or kill process: `lsof -ti:3773 | xargs kill -9` |
+| "ChEMBL client unavailable" | Install chembl-webresource-client: `uv add chembl-webresource-client` |
+| "BLAST search timed out" | Use shorter sequence (<1000bp) or try again later |
+| "File not found" | Ensure data path is absolute or relative to working directory |
+| Docker build fails | `docker system prune -a && docker-compose build --no-cache` |
+| Memory issues | Increase memory limit in Docker or reduce dataset size |
+
+---
+
+## 📊 Dependencies
+
+### Core Packages
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| bindu | >=2026.6.6 | Agent deployment framework |
+| agno | >=2.2.0 | AI agent framework |
+| openai | >=2.11.0 | LLM client |
+| biopython | >=1.86 | BLAST, sequence analysis |
+| scanpy | >=1.12 | Single-cell RNA-seq analysis |
+| chembl-webresource-client | >=0.10.9 | ChEMBL database queries |
+| reportlab | >=4.4.9 | PDF generation |
+| pandas | >=2.0.0 | Data manipulation |
+| python-dotenv | >=1.0.0 | Environment management |
+
+### Development Packages
+
+| Package | Purpose |
+|---------|---------|
+| pytest | Testing framework |
+| ruff | Code formatting/linting |
+| pre-commit | Git hooks |
+| mypy | Type checking |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+We welcome contributions from the biomedical research and AI communities!
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+### Contribution Steps
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Make your changes** following the code style
+4. **Add tests** for new functionality
+5. **Run tests**: `uv run pytest`
+6. **Run linters**: `uv run ruff check . && uv run ruff format .`
+7. **Commit with descriptive messages**: `git commit -m 'Add amazing feature'`
+8. **Push to your fork**: `git push origin feature/amazing-feature`
+9. **Open a Pull Request**
+
+### Code Style Guidelines
+
+- Follow PEP 8 conventions
+- Use type hints for all function parameters and returns
+- Add docstrings for all public functions (Google style)
+- Keep functions focused and small (<50 lines)
+- Use async/await for I/O-bound operations
+- Handle errors gracefully with descriptive messages
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2026 Paras Chamoli
 
 ---
 
-## 🙏 Powered by Bindu
+## 🙏 Credits & Acknowledgments
 
-Built with the [Bindu Agent Framework](https://github.com/getbindu/bindu)
+- **Developer:** Paras Chamoli
+- **Framework:** [Bindu](https://bindus.directory) - Agent deployment platform for the Internet of Agents
+- **Agent Framework:** [Agno](https://github.com/agno-agi/agno) - Lightweight AI agent toolkit
+- **Bioinformatics:** [Biopython](https://biopython.org/) - NCBI BLAST integration
+- **Single-Cell:** [Scanpy](https://scanpy.readthedocs.io/) - scRNA-seq analysis
+- **Cheminformatics:** [ChEMBL](https://www.ebi.ac.uk/chembl/) - Drug discovery database
+- **PDF Generation:** [ReportLab](https://www.reportlab.com/) - Scientific report creation
 
-**Why Bindu?**
-- 🌐 **Internet of Agents**: A2A, AP2, X402 protocols for agent collaboration
-- ⚡ **Zero-config setup**: From idea to production in minutes
-- 🛠️ **Production-ready**: Built-in deployment, monitoring, and scaling
+### 🔗 Useful Links
 
-**Build Your Own Agent:**
-```bash
-uvx cookiecutter https://github.com/getbindu/create-bindu-agent.git
+- 🌐 **Bindu Directory:** [bindus.directory](https://bindus.directory)
+- 📚 **Bindu Docs:** [docs.getbindu.com](https://docs.getbindu.com)
+- 🐙 **GitHub:** [github.com/Paraschamoli/biomni-agent](https://github.com/Paraschamoli/biomni-agent)
+- 📖 **Documentation:** [Paraschamoli.github.io/biomni-agent](https://Paraschamoli.github.io/biomni-agent)
+- 💬 **Discord:** [Bindu Community](https://discord.gg/3w5zuYUuwt)
+- 🐛 **Issue Tracker:** [github.com/Paraschamoli/biomni-agent/issues](https://github.com/Paraschamoli/biomni-agent/issues)
+
+---
+
+## 🧬 Citation
+
+If you use BioOmni Agent in your research, please cite:
+
+```bibtex
+@software{chamoli2026biomni,
+  author = {Chamoli, Paras},
+  title = {BioOmni Agent: General-Purpose Biomedical AI Agent},
+  year = {2026},
+  publisher = {GitHub},
+  url = {https://github.com/Paraschamoli/biomni-agent}
+}
 ```
 
 ---
 
-## 📚 Resources
-
-- 📖 [Full Documentation](https://Paraschamoli.github.io/biomni-agent/)
-- 💻 [GitHub Repository](https://github.com/Paraschamoli/biomni-agent/)
-- 🐛 [Report Issues](https://github.com/Paraschamoli/biomni-agent/issues)
-- 💬 [Join Discord](https://discord.gg/3w5zuYUuwt)
-- 🌐 [Agent Directory](https://bindus.directory)
-- 📚 [Bindu Documentation](https://docs.getbindu.com)
-
----
-
 <p align="center">
-  <strong>Built with 💛 by the team from Amsterdam 🌷</strong>
+  <strong>Built with 💛 for the biomedical research community</strong><br/>
+  <em>Democratizing access to advanced bioinformatics analysis</em>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Paraschamoli/biomni-agent">⭐ Star this repo</a> •
-  <a href="https://discord.gg/3w5zuYUuwt">💬 Join Discord</a> •
-  <a href="https://bindus.directory">🌐 Agent Directory</a>
+  <a href="https://github.com/Paraschamoli/biomni-agent/stargazers">⭐ Star on GitHub</a> •
+  <a href="https://bindus.directory">🌐 Register on Bindu</a> •
+  <a href="https://github.com/Paraschamoli/biomni-agent/issues">🐛 Report Issues</a> •
+  <a href="https://discord.gg/3w5zuYUuwt">💬 Join Discord</a>
 </p>
 
-#   b i o m n i - a g e n t  
- 
+> **Note:** This agent follows the Bindu pattern with lazy initialization and secure API key handling. It boots without API keys and only fails at runtime if keys are needed but not provided. BioOmni is designed for research assistance and is not a substitute for professional medical advice, clinical diagnosis, or regulatory decision-making.
