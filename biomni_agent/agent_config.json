@@ -8,12 +8,6 @@
     "skills/biomni"
   ],
   "capabilities": {},
-  "storage": {
-    "type": "memory"
-  },
-  "scheduler": {
-    "type": "memory"
-  },
   "agent_trust": "low",
   "debug_mode": true,
   "debug_level": 2,

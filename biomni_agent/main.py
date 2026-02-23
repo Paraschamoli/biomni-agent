@@ -224,8 +224,7 @@ async def run_agent(messages: list[dict[str, str]]) -> Any:
 
     try:
         # Run the agent and get response
-        response = await agent.arun(messages)
-        return response
+        return await agent.arun(messages)  # type: ignore[invalid-await]
     except Exception as e:
         error_msg = f"Agent execution failed: {type(e).__name__}: {e}"
         raise RuntimeError(error_msg) from e

@@ -41,7 +41,12 @@ A comprehensive biomedical AI agent that integrates advanced LLM reasoning with 
 
 ---
 
-## 🛠️ Tools & Capabilities
+## 🛠️ Tools & Key Capabilities:
+- 🧬 **CRISPR Design** - Guide RNA design and off-target prediction
+- 🧪 **scRNA-seq Analysis** - Single-cell transcriptomics data processing
+- 💊 **ADMET Prediction** - Drug property and toxicity forecasting
+- 📄 **Scientific PDF Analysis** - Research paper extraction and summarization
+- 🔬 **Bioinformatics Tools** - Comprehensive biomedical data analysis
 
 ### Built-in Biomedical Tools
 | Tool | Description | Use Case |

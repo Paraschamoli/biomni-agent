@@ -1,0 +1,195 @@
+# BioOmni Agent Skill
+# General-Purpose Biomedical AI Agent
+
+# Basic Metadata
+id: biomni-agent-v1
+name: biomni-agent
+version: 1.0.0
+author: paras25619@gmail.com
+
+# Description
+description: |
+  A comprehensive biomedical AI agent that integrates advanced LLM reasoning with specialized domain tools.
+  Built for researchers, scientists, and bioinformaticians who need sophisticated biomedical analysis
+  capabilities without writing code. Specializes in CRISPR screen design, scRNA-seq analysis,
+  ADMET prediction, and scientific PDF report generation.
+
+# Tags and Modes
+tags:
+  - biomedical-ai
+  - crispr-design
+  - scrna-seq
+  - admet-prediction
+  - bioinformatics
+  - drug-discovery
+  - genomics
+  - scientific-research
+  - pdf-analysis
+
+input_modes:
+  - text/plain
+  - application/json
+  - application/pdf
+
+output_modes:
+  - text/plain
+  - application/json
+  - text/markdown
+  - application/pdf
+
+# Example Queries
+examples:
+  - "Design CRISPR guide RNAs for targeting the TP53 gene in human cells"
+  - "Analyze this scRNA-seq dataset to identify cell type markers"
+  - "Predict ADMET properties for this small molecule: CC(=O)Nc1ccc(cc1)N"
+  - "Generate a comprehensive research report on Alzheimer's disease mechanisms"
+  - "Analyze this scientific paper and extract key findings: [PDF upload]"
+
+# Detailed Capabilities
+capabilities_detail:
+  crispr_design:
+    supported: true
+    features:
+      - guide_rna_design
+      - off_target_prediction
+      - pAM_selection
+      - efficiency_scoring
+    organisms:
+      - human
+      - mouse
+      - zebrafish
+      - drosophila
+    tools:
+      - benchling
+      - crispor
+      - custom_algorithms
+  scrna_analysis:
+    supported: true
+    analysis_types:
+      - quality_control
+      - normalization
+      - clustering
+      - differential_expression
+      - trajectory_analysis
+    visualizations:
+      - umap_plots
+      - heatmaps
+      - volcano_plots
+      - dot_plots
+  admet_prediction:
+    supported: true
+    properties:
+      - absorption
+      - distribution
+      - metabolism
+      - excretion
+      - toxicity
+    models:
+      - deep_learning
+      - qsar
+      - physiologically_based
+  pdf_analysis:
+    supported: true
+    capabilities:
+      - text_extraction
+      - figure_analysis
+      - table_extraction
+      - reference_extraction
+    formats:
+      - scientific_articles
+      - research_papers
+      - clinical_trials
+      - patents
+
+# Performance Metrics
+performance:
+  average_processing_time: "~60-120 seconds"
+  max_concurrent_requests: 4
+  memory_per_request: "~1GB"
+  supported_genomes: "50+ reference genomes"
+  molecule_limit: "1000 molecules per batch"
+
+# Biomedical Expertise
+biomedical_expertise:
+  domains:
+    - genomics
+    - transcriptomics
+    - proteomics
+    - metabolomics
+    - pharmacology
+    - biochemistry
+    - molecular_biology
+  techniques:
+    - gene_editing
+    - high_throughput_screening
+    - next_generation_sequencing
+    - mass_spectrometry
+    - computational_modeling
+  applications:
+    - drug_discovery
+    - precision_medicine
+      - biomarker_identification
+    - pathway_analysis
+    - systems_biology
+
+# Use Cases
+use_cases:
+  primary:
+    - "CRISPR guide RNA design for gene editing experiments"
+    - "Single-cell RNA-seq data analysis and visualization"
+    - "ADMET property prediction for drug candidates"
+    - "Scientific literature analysis and report generation"
+  secondary:
+    - "Research hypothesis generation and validation"
+    - "Experimental design optimization"
+    - "Data interpretation and statistical analysis"
+    - "Grant proposal preparation"
+
+# Deliverables
+deliverables:
+  research_reports:
+    - comprehensive_summaries
+    - methodology_descriptions
+    - result_interpretations
+    - future_directions
+  visualizations:
+    - publication_quality_figures
+    - interactive_plots
+    - pathway_diagrams
+    - network_graphs
+  data_files:
+    - processed_datasets
+    - analysis_results
+    - annotation_files
+    - summary_statistics
+
+# Limitations
+limitations:
+  - "Cannot perform actual laboratory experiments"
+  - "Predictions based on computational models only"
+  - "Limited to publicly available genomic data"
+  - "Cannot provide medical diagnosis or treatment advice"
+  - "Large datasets may require extended processing time"
+
+# Best Practices
+best_practices:
+  - "Provide clear research objectives and experimental constraints"
+  - "Include organism and cell type information for genomic analyses"
+  - "Specify desired output formats and visualization preferences"
+  - "Provide complete molecular structures for ADMET predictions"
+  - "Include relevant literature references when available"
+
+# Safety and Ethics
+safety_considerations:
+  - "All predictions for research purposes only"
+  - "Does not provide medical advice or diagnosis"
+  - "Encourages validation through experimental verification"
+  - "Follows ethical guidelines for genetic research"
+  - "Maintains data privacy and confidentiality"
+
+# Compliance
+compliance_standards:
+  - "Follows NIH guidelines for genomic research"
+  - "Compliant with GDPR for data protection"
+  - "Adheres to FAIR data principles"
+  - "Supports reproducible research practices"
