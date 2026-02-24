@@ -1,7 +1,3 @@
-# BioOmni - General-Purpose Biomedical AI Agent Skill
-# Advanced biomedical analysis with CRISPR, scRNA-seq, ChEMBL, and reporting
-
-# Basic Metadata
 id: biomni-v1
 name: biomni
 version: 1.0.0
@@ -9,9 +5,11 @@ author: paras25619@gmail.com
 
 # Description
 description: |
-  A comprehensive biomedical AI agent that integrates advanced LLM reasoning with specialized
-  domain tools for CRISPR screen design, single-cell RNA-seq analysis, ChEMBL database queries,
-  and scientific report generation. Designed for researchers, scientists, and bioinformaticians.
+  A comprehensive biomedical AI agent that integrates advanced language model reasoning
+  with specialized bioinformatics and drug discovery tools. Supports CRISPR screen design,
+  single-cell RNA-seq analysis, ChEMBL database queries, BLAST sequence analysis,
+  and scientific report generation including PDF outputs. Designed for researchers,
+  scientists, and bioinformaticians.
 
 # Tags and Modes
 tags:
@@ -44,77 +42,54 @@ examples:
 
 # Detailed Capabilities
 capabilities_detail:
-  crispr_design:
+  primary_capability:
     supported: true
+    description: "Biomedical research assistance integrating CRISPR design, scRNA-seq analysis, database queries, and sequence analysis"
     features:
-      - sgRNA_design_guidelines
-      - experimental_planning
-      - validation_strategy_design
-    limitations:
-      - "Does not perform computational off-target prediction"
-      - "References external tools (CRISPOR, Benchling) for actual prediction"
+      - "CRISPR sgRNA design guidance and experimental planning"
+      - "Single-cell RNA-seq clustering and marker identification"
+      - "Differential gene expression analysis"
+      - "ChEMBL molecule lookup and bioactivity retrieval"
+      - "BLAST sequence alignment and interpretation"
+      - "Scientific report generation with structured outputs"
+    limitations: "Does not provide clinical diagnosis, medical treatment advice, or regulatory decisions"
 
-  scrna_seq_analysis:
+  secondary_capability:
     supported: true
+    description: "Scientific documentation and export generation"
     features:
-      - cell_type_annotation
-      - differential_expression_analysis
-      - marker_gene_identification
-      - clustering_analysis
-    data_formats:
-      - .h5ad
-      - .loom
-      - 10x_mtx
-    limitations:
-      - "Requires pre-processed data"
-      - "Not for real-time sequencing analysis"
-
-  chembl_query:
-    supported: true
-    features:
-      - molecule_lookup_by_smiles
-      - bioactivity_data_retrieval
-      - target_information
-    limitations:
-      - "DATABASE QUERY ONLY - not computational prediction"
-      - "Requires internet connection"
-
-  pdf_reporting:
-    supported: true
-    formats:
-      - pdf_documents
-      - base64_encoded
-    features:
-      - automatic_text_wrapping
-      - metadata_inclusion
-      - page_management
+      - "PDF report generation with structured formatting"
+      - "Metadata inclusion and automatic pagination"
+      - "Base64-encoded output support"
+      - "Methodology documentation for reproducibility"
+      - "Experimental validation strategy suggestions"
 
 # Requirements
 requirements:
   packages:
-    - agno>=2.2.0
-    - bindu>=2026.6.6
-    - openai>=2.11.0
-    - python-dotenv>=1.0.0
-    - biopython>=1.86
-    - scanpy>=1.12
-    - pandas>=2.0.0
-    - numpy>=1.24.0
-    - reportlab>=4.4.9
-    - chembl-webresource-client>=0.10.9
-  system: []
+    - "agno>=2.2.0"
+    - "bindu>=2026.6.6"
+    - "openai>=2.11.0"
+    - "python-dotenv>=1.0.0"
+    - "biopython>=1.86"
+    - "scanpy>=1.12"
+    - "pandas>=2.0.0"
+    - "numpy>=1.24.0"
+    - "reportlab>=4.4.9"
+    - "chembl-webresource-client>=0.10.9"
+  system:
+    - "Internet access for BLAST and ChEMBL queries"
   min_memory_mb: 1024
   external_services:
-    - OpenRouter API
-    - NCBI BLAST (via internet)
-    - ChEMBL Database (via internet)
+    - "OpenRouter API"
+    - "NCBI BLAST"
+    - "ChEMBL Database"
 
 # Performance Metrics
 performance:
   avg_processing_time_ms: 5000
   max_concurrent_requests: 10
   memory_per_request_mb: 1024
-  timeout_seconds: 180
   scalability: horizontal
 
 # Tool Restrictions
@@ -125,28 +100,151 @@ allowed_tools:
   - generate_pdf_report_async
   - design_crispr_sgrna_async
 
-# Error Handling
-error_handling:
-  - "Invalid sequence: Returns validation error with correction suggestions"
-  - "Missing API keys: Clear error with setup instructions"
-  - "File not found: Checks common paths and extensions"
-  - "Timeout: Suggests simpler queries or shorter sequences"
+# Rich Documentation
+documentation:
+  overview: |
+    The BioOmni skill provides advanced biomedical analysis by combining large
+    language model reasoning with domain-specific bioinformatics and drug discovery
+    tools. It assists in experimental planning, genomic analysis, molecular database
+    querying, and structured scientific reporting. Intended for research use only.
+
+  use_cases:
+    when_to_use:
+      - "CRISPR screen design and experimental planning"
+      - "Single-cell RNA-seq data interpretation"
+      - "Drug discovery and molecule bioactivity lookup"
+      - "BLAST sequence similarity analysis"
+      - "Scientific report generation for research documentation"
+
+    when_not_to_use:
+      - "Clinical diagnosis or patient treatment decisions"
+      - "Regulatory approval advice"
+      - "Emergency medical scenarios"
+      - "Non-biomedical general tasks"
+
+  input_structure: |
+    Accepts biomedical research queries in plain text or JSON format.
+
+    Example (Plain Text):
+    "Design a CRISPR knockout screen targeting metabolic genes in liver cancer"
+
+    Example (JSON):
+    {
+      "task": "crispr_design | scrna_analysis | chembl_query | blast | report",
+      "input_data": "sequence, dataset path, or SMILES string",
+      "output_format": "text | json | pdf",
+      "parameters": {
+        "species": "human",
+        "analysis_depth": "standard | advanced"
+      }
+    }
+
+    Constraints:
+    - DNA/RNA sequences must use valid nucleotide characters
+    - scRNA-seq data must be preprocessed (.h5ad, .loom, or 10x format)
+    - Internet required for BLAST and ChEMBL
+    - English language preferred
+
+  output_format: |
+    Returns structured biomedical analysis including:
+
+    - TASK SUMMARY: Overview of requested analysis
+    - INPUT VALIDATION: Confirmation of sequence/data validity
+    - ANALYSIS RESULTS:
+        - CRISPR design recommendations or sgRNA guidelines
+        - scRNA-seq clustering and marker genes
+        - BLAST alignment summaries
+        - ChEMBL bioactivity data
+    - INTERPRETATION: Biological or experimental interpretation
+    - METHODOLOGY: Tools and reasoning steps used
+    - RECOMMENDATIONS: Suggested next experimental steps
+    - EXPORT OPTIONS:
+        - Structured JSON
+        - Markdown report
+        - PDF document (if requested)
+
+  error_handling:
+    - "Invalid sequence: Returns validation error with correction suggestions"
+    - "Missing API keys: Returns setup instructions"
+    - "File not found: Requests correct dataset path"
+    - "Timeout: Suggests shorter sequences or reduced analysis depth"
+    - "Unsupported format: Lists supported file types"
+
+  examples:
+    - title: "CRISPR Screen Design"
+      input:
+        content: "Design a CRISPR knockout screen for essential genes in cancer cells"
+      output:
+        task_summary: "CRISPR screen design for essential gene identification"
+        sgrna_guidelines: 6
+        validation_strategy: "Included"
+        processing_time_ms: 5400
+
+    - title: "ChEMBL Molecule Query"
+      input:
+        content: "Query ChEMBL for bioactivity data on SMILES: CC(C)NCC(COC1=CC=CC=C1)O"
+      output:
+        molecules_found: 3
+        targets_identified: 5
+        bioactivity_records: 12
+        processing_time_ms: 4800
+
+  best_practices:
+    for_developers:
+      - "Validate biological input formats before submission"
+      - "Specify species and experimental context"
+      - "Use JSON input for structured workflows"
+      - "Allow up to 180 seconds for complex analyses"
+      - "Ensure API keys for BLAST and ChEMBL are configured"
+
+    for_orchestrators:
+      - "Route genomics, CRISPR, and drug discovery queries here"
+      - "Avoid routing clinical decision-making requests"
+      - "Allocate higher memory (1024MB per request)"
+      - "Set timeout to 180 seconds for sequence-heavy analysis"
+      - "Monitor external API usage and rate limits"
+
+  installation: |
+    Required packages:
+    pip install agno bindu openai python-dotenv biopython scanpy pandas numpy reportlab chembl-webresource-client
+
+    Environment variables:
+    - OPENROUTER_API_KEY
+    - MEM0_API_KEY (optional)
+
+    Internet access required for:
+    - NCBI BLAST
+    - ChEMBL database queries
+
+  versioning:
+    - version: "1.0.0"
+      date: "2026-01-10"
+      changes: "Initial release with CRISPR design, scRNA-seq analysis, ChEMBL integration, BLAST support, and PDF reporting"
+    - version: "1.1.0"
+      status: "planned"
+      changes: "Enhanced off-target prediction integration and expanded multi-omics support"
 
 # Assessment
 assessment:
   keywords:
-    - crispr
-    - blast
-    - scrna-seq
-    - single-cell
-    - chembl
-    - drug
-    - gene
-    - sequence
-    - pdf
-    - report
-    - biomedical
-    - bioinformatics
+    - "crispr"
+    - "blast"
+    - "scrna-seq"
+    - "single-cell"
+    - "chembl"
+    - "drug discovery"
+    - "gene"
+    - "sequence"
+    - "bioinformatics"
+    - "biomedical"
+
+  specializations:
+    - domain: "gene editing"
+      confidence_boost: 0.4
+    - domain: "single cell analysis"
+      confidence_boost: 0.4
+    - domain: "drug discovery"
+      confidence_boost: 0.3
 
   anti_patterns:
     - "clinical diagnosis"
@@ -154,10 +252,14 @@ assessment:
     - "medical advice"
     - "regulatory decision"
 
-  specializations:
-    - domain: gene_editing
-      confidence_boost: 0.4
-    - domain: single_cell_analysis
-      confidence_boost: 0.4
-    - domain: drug_discovery
-      confidence_boost: 0.3
+  complexity_indicators:
+    simple:
+      - "basic gene lookup"
+      - "single sequence blast"
+    medium:
+      - "standard CRISPR design"
+      - "single dataset scrna analysis"
+    complex:
+      - "multi-condition scrna comparison"
+      - "large sequence alignment"
+      - "comprehensive drug discovery analysis"
