@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "recreate_keys": false,
   "skills": [
-    "skills/biomni"
+    "skills/biomni_agent"
   ],
   "capabilities": {},
   "agent_trust": "low",
