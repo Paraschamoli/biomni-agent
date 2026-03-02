@@ -7,7 +7,7 @@ author: paras@getbindu.com
 description: |
   Biomedical AI agent that combines LLM reasoning with four specialized tools:
   BLAST sequence alignment, scRNA-seq clustering analysis, ChEMBL ADMET queries,
-  and PDF report generation. Designed for computational research workflows,
+  and PDF report generation.Designed for computational research workflows,
   experimental planning, and biomedical hypothesis generation.
 
 # Tags and Modes
